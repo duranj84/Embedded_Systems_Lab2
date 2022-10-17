@@ -1,0 +1,42 @@
+.cdecls C,LIST,"msp430.h"
+.def    RESET
+.text
+.retain
+.retainrefs
+RESET       mov.w #__STACK_END,SP
+StopWDT     mov.w #WDTPW|WDTHOLD,&WDTCTL
+.global main
+main:
+			mov.w #0003h, R4
+			mov.w #0002h, R5
+			cmp R4, R5
+			jl less
+			jge greater_equala
+			jmp $
+less:
+			call #less_function
+			jmp $
+greater_equal:
+			jeq equal
+			call #greater_function
+			jmp $
+less_function:
+			mov.w #000Ah, &2000h
+			mov.w #0009h, &2002h
+			mov.w #0008h, &2004h
+			mov.w #0007h, &2006h
+			mov.w #0006h, &2008h
+			add #1h, R4
+			ret
+equal:
+			jmp $
+greater_function:
+			mov.w #0001h, &2000h
+			mov.w #0002h, &2002h
+			mov.w #0003h, &2004h
+			mov.w #0004h, &2006h
+			mov.w #0005h, &2008h
+			sub #1h, R4
+			ret
+	xor	%eax, %eax
+	ret
