@@ -1,0 +1,28 @@
+#include <msp430.h>
+
+int add(int num1, int num2);
+
+int main(void){
+  WDTCTL = WDTPW|WDTHOLD;
+  
+  int a = num1;
+  int b = num2;
+  
+  int sum = add(num1, num2);
+  
+  if (sum == 26)
+  {
+    P1OUT &= ~BIT0;
+  }
+  else
+  {
+    P1OUT |= BIT0;
+  }
+  return 0;
+}
+
+int add(int num1, int num2)
+{
+  int result = num1 + num2;
+  return result;
+}
