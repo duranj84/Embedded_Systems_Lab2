@@ -5,38 +5,28 @@
 .retainrefs
 RESET       mov.w #__STACK_END,SP
 StopWDT     mov.w #WDTPW|WDTHOLD,&WDTCTL
+
 .global main
 main:
-			mov.w #0003h, R4
-			mov.w #0002h, R5
-			cmp R4, R5
-			jl less
-			jge greater_equala
+		    mov.b #0A24h, R4
+			mov.b #0010h, R5
+			mov.b #0001h, R6
+
+			and R6, R4
+			and R6, R5
+
+			cmp R4, R6
+			jeq R4EqualToR6
 			jmp $
-less:
-			call #less_function
+
+R4EqualToR6:
+			cmp R5, R6
+			jeq R5EqualToR6
 			jmp $
-greater_equal:
-			jeq equal
-			call #greater_function
+
+R5EqualToR6:
+			mov.w #0FF0h, R9
 			jmp $
-less_function:
-			mov.w #000Ah, &2000h
-			mov.w #0009h, &2002h
-			mov.w #0008h, &2004h
-			mov.w #0007h, &2006h
-			mov.w #0006h, &2008h
-			add #1h, R4
-			ret
-equal:
-			jmp $
-greater_function:
-			mov.w #0001h, &2000h
-			mov.w #0002h, &2002h
-			mov.w #0003h, &2004h
-			mov.w #0004h, &2006h
-			mov.w #0005h, &2008h
-			sub #1h, R4
-			ret
+
 	xor	%eax, %eax
 	ret
