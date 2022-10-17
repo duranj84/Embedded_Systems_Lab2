@@ -1,0 +1,24 @@
+.cdecls C,LIST,"msp430.h"
+.def    RESET
+.text
+.retain
+.retainrefs
+RESET       mov.w #__STACK_END,SP
+StopWDT     mov.w #WDTPW|WDTHOLD,&WDTCTL
+
+mov.w #2D97h, &0200h
+mov.w #2D97h, &0200h
+mov.w #2D97h, &0200h
+jmp Main
+
+Main: 
+  mov.w &0200h, R5
+  mov.w &0202h, R6 
+  mov.w &0204h, R7
+  mov.w &020Dh, R8
+  and.w R5, R6
+  or.w R6, R7
+  mov.w R7, @R8
+
+	xor	%eax, %eax
+	ret
