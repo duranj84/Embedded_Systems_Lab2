@@ -6,19 +6,18 @@
 RESET       mov.w #__STACK_END,SP
 StopWDT     mov.w #WDTPW|WDTHOLD,&WDTCTL
 
-mov.w #2D97h, &0200h
-mov.w #2D97h, &0200h
-mov.w #2D97h, &0200h
-jmp Main
+	mov.w #2D97h, &2000h
+	mov.w #6239h, &2002h
+	mov.w #00E8h, &2004h
+	jmp Main
 
-Main: 
-  mov.w &0200h, R5
-  mov.w &0202h, R6 
-  mov.w &0204h, R7
-  mov.w &020Dh, R8
-  and.w R5, R6
-  or.w R6, R7
-  mov.w R7, @R8
+Main:
+  	mov.w &2000h, R5
+  	mov.w &2002h, R6
+  	mov.w &2004h, R7
+  	and.w R5, R6
+  	or.w R6, R7
+  	mov.w &203Ch, R7
 
 	xor	%eax, %eax
 	ret
